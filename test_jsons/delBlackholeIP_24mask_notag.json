@@ -1,0 +1,17 @@
+{
+    "app_config": null,
+    "asset_id": "22",
+    "config": {
+      "route_to_null": "192.0.2.1",
+      "trigger_host": "10.255.77.43",
+      "username": "{username}",
+      "password": "password"
+    },
+    "debug_level": 4,
+    "identifier": "unblock_network",
+    "parameters": [
+        {
+        "destination_network": "7.7.7.0/24"
+        }
+    ]
+}

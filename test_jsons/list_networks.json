@@ -1,0 +1,15 @@
+{
+    "app_config": null,
+    "asset_id": "22",
+    "config": {
+      "trigger_host": "10.255.77.43",
+      "route_to_null": "192.0.2.1",
+      "username": "{username}",
+      "password": "{password}"
+    },
+    "debug_level": 3,
+    "identifier": "list_networks",
+    "parameters": [
+      {}
+    ]
+}
