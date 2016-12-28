@@ -1,184 +1,316 @@
 {
-  "appid"       : "95FD54D0-08D2-458D-9BE1-88EB716141E2",
-  "name"      : "Cisco Router BGP RTBH",
-  "description" : "This app interfaces with Cisco IOS-XE devices to create a blackhole for configured IPs or networks in Cisco BGP networks.",
-  "publisher": "World Wide Technology",
-  "package_name": "phantom_ciscorouter_rtbh-1.10",
-  "type": "firewall",
-  "license": "Copyright (c) World Wide Technology, Inc. 2016",
-  "main_module" : "ciscorouter_rtbh_connector.pyc",
-  "app_version": "1.10.1",
-  "utctime_updated": "2016-10-21T22:02:18.000000Z",
-  "product_vendor": "Cisco Systems",
-  "product_name": "Cisco IOS-XE",
-  "product_version_regex": ".*",
-  "min_phantom_version": "1.0.240",
-  "logo": "cisco.png",
-  "url": "https://github.com/taruch/phantom_cisco_csr_rtbh.git",
-  "configuration": {
-    "trigger_host": {
-      "description": "Device IP/Hostname",
-      "order": 0,
-      "data_type": "string",
-      "required": true
-    },
-    "ph": {
-      "data_type": "ph",
-      "order": 1
-    },
-    "username": {
-      "description": "User with access to the trigger node",
-      "data_type": "string",
-      "order": 2,
-      "required": true
-    },
-    "password": {
-      "description": "Password",
-      "data_type": "password",
-      "order": 3,
-      "required": true
-    },
-    "tag": {
-      "description": "Route Tag",
-      "data_type": "string",
-      "order": 4,
-      "required": false
-    },
-    "route_to_null": {
-      "description": "Null Route IP (x.x.x.x)",
-      "order": 5,
-      "data_type": "string",
-      "required": true
-    }
-  },
-  "actions": [
-    {
-      "action": "test connectivity",
-      "description": "Validate the asset configuration for connectivity",
-      "verbose": "This action logs into the Cisco router using a SSH call",
-      "type": "test",
-      "identifier": "test connectivity",
-      "read_only": true,
-      "parameters": {},
-      "output": [],
-      "versions": "EQ(*)"
-    },
-    {
-      "action": "list networks",
-      "description": "Lists currently blocked networks",
-      "type": "investigate",
-      "identifier": "list_networks",
-      "read_only": true,
-      "parameters": {},
-      "render": {
-        "width": 12,
-        "title": "Static Routes",
-        "type": "table",
-        "height": 20
-      },
-      "output": [
-        {
-          "data_path": "action_result.data.*.blackholed-network",
-          "data_type": "string",
-          "column_name": "Blocked Network",
-          "column_order": 0
-        },
-        {
-          "data_path": "action_result.status",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.message",
-          "data_type": "string"
-        }
-      ],
-      "versions": "EQ(*)"
-    },
-    {
-      "action": "block ip",
-      "description": "Blocks an IP",
-      "type": "contain",
-      "identifier": "block_ip",
-      "read_only": false,
-      "parameters": {
-         "destination_network": {
-           "contains": [ "ip" ],
-           "description": "IP to block (X.X.X.X)",
-           "data_type": "string",
-           "primary": true,
-           "read_only": false,
-           "required": true
-         },
-         "name": {
-           "description": "Name route",
-           "data_type": "string",
-           "required": false
-         }
-      },
-      "output": [],
-      "versions": "EQ(*)"
-    },
-    {
-      "action": "unblock ip",
-      "description": "Unblocks an IP",
-      "type": "correct",
-      "identifier": "unblock_ip",
-      "read_only": false,
-      "parameters": {
-         "destination_network": {
-           "contains": [ "ip" ],
-            "description": "IP to unBlock (X.X.X.X)",
+    "appid": "95FD54D0-08D2-458D-9BE1-88EB716141E2",
+    "name": "Cisco Router BGP RTBH",
+    "description": "This app interfaces with Cisco IOS-XE devices to create a blackhole for configured IPs or networks in Cisco BGP networks.",
+    "publisher": "World Wide Technology",
+    "package_name": "phantom_ciscorouter_rtbh-1.10",
+    "type": "firewall",
+    "license": "Copyright (c) World Wide Technology, Inc. 2016",
+    "main_module": "ciscorouter_rtbh_connector.pyc",
+    "app_version": "1.10.2",
+    "utctime_updated": "2016-10-28T22:02:18.000000Z",
+    "product_vendor": "Cisco Systems",
+    "product_name": "Cisco IOS-XE",
+    "product_version_regex": ".*",
+    "min_phantom_version": "1.0.240",
+    "logo": "cisco.png",
+    "url": "https://github.com/taruch/phantom_cisco_csr_rtbh.git",
+    "configuration": {
+        "trigger_host": {
+            "description": "Device IP/Hostname",
+            "order": 0,
             "data_type": "string",
-            "primary": true,
-            "read_only": false,
             "required": true
-         }
-       },
-       "output": [],
-       "versions": "EQ(*)"
+        },
+        "ph": {
+            "data_type": "ph",
+            "order": 1
+        },
+        "username": {
+            "description": "User with access to the trigger node",
+            "data_type": "string",
+            "order": 2,
+            "required": true
+        },
+        "password": {
+            "description": "Password",
+            "data_type": "password",
+            "order": 3,
+            "required": true
+        },
+        "tag": {
+            "description": "Route Tag",
+            "data_type": "string",
+            "order": 4,
+            "required": false
+        },
+        "route_to_null": {
+            "description": "Null Route IP (x.x.x.x)",
+            "order": 5,
+            "data_type": "string",
+            "required": true
+        }
     },
-    {
-      "action": "block network",
-      "description": "Blocks an IP network",
-      "type": "contain",
-      "identifier": "block_network",
-      "read_only": false,
-      "parameters": {
-         "destination_network": {
-           "contains": [ "ip network" ],
-           "description": "IP/network to block (X.X.X.X/NM)",
-           "data_type": "string",
-           "primary": true,
-           "read_only": false,
-           "required": true
-         },
-         "name": {
-           "description": "Name route",
-           "data_type": "string",
-           "required": false
-         }
-      },
-      "output": [],
-      "versions": "EQ(*)"
-    },
-    {
-      "action": "unblock network",
-      "description": "Unblocks an IP network",
-      "type": "correct",
-      "identifier": "unblock_network",
-      "read_only": false,
-      "parameters": {
-         "destination_network": {
-           "contains": [ "ip network" ],
-           "description": "IP/network to unBlock (X.X.X.X/NM)",
-           "data_type": "string",
-           "primary": true,
-           "read_only": false,
-           "required": true
-         }
-       },
-       "output": [],
-       "versions": "EQ(*)"
-     }
-  ]
+    "actions": [
+        {
+            "action": "test connectivity",
+            "description": "Validate the asset configuration for connectivity",
+            "verbose": "This action logs into the Cisco router using a SSH call",
+            "type": "test",
+            "identifier": "test connectivity",
+            "read_only": true,
+            "parameters": {},
+            "output": [],
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "list networks",
+            "description": "Lists currently blocked networks",
+            "type": "investigate",
+            "identifier": "list_networks",
+            "read_only": true,
+            "parameters": {},
+            "render": {
+                "width": 12,
+                "title": "Static Routes",
+                "type": "table",
+                "height": 20
+            },
+            "output": [
+                {
+                    "data_path": "action_result.data.*.blackholed-network",
+                    "data_type": "string",
+                    "column_name": "Blocked Network",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                }
+            ],
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "block ip",
+            "description": "Blocks an IP",
+            "type": "contain",
+            "identifier": "block_ip",
+            "read_only": false,
+            "parameters": {
+                "destination_network": {
+                    "contains": [
+                        "ip"
+                    ],
+                    "description": "IP to block (X.X.X.X)",
+                    "data_type": "string",
+                    "primary": true,
+                    "read_only": false,
+                    "required": true
+                },
+                "name": {
+                    "description": "Name route",
+                    "data_type": "string",
+                    "required": false
+                }
+            },
+            "render": {
+                "width": 12,
+                "title": "Block Ip",
+                "type": "table",
+                "height": 5
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.destination_network",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric"
+                }
+            ],
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "unblock ip",
+            "description": "Unblocks an IP",
+            "type": "correct",
+            "identifier": "unblock_ip",
+            "read_only": false,
+            "parameters": {
+                "destination_network": {
+                    "contains": [
+                        "ip"
+                    ],
+                    "description": "IP to unBlock (X.X.X.X)",
+                    "data_type": "string",
+                    "primary": true,
+                    "read_only": false,
+                    "required": true
+                }
+            },
+            "render": {
+                "width": 12,
+                "title": "Unblock IP",
+                "type": "table",
+                "height": 5
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.destination_network",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric"
+                }
+            ],
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "block network",
+            "description": "Blocks an IP network",
+            "type": "contain",
+            "identifier": "block_network",
+            "read_only": false,
+            "parameters": {
+                "destination_network": {
+                    "contains": [
+                        "ip network"
+                    ],
+                    "description": "IP/network to block (X.X.X.X/NM)",
+                    "data_type": "string",
+                    "primary": true,
+                    "read_only": false,
+                    "required": true
+                },
+                "name": {
+                    "description": "Name route",
+                    "data_type": "string",
+                    "required": false
+                }
+            },
+            "render": {
+                "width": 12,
+                "title": "Block Network",
+                "type": "table",
+                "height": 5
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.destination_network",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric"
+                }
+            ],
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "unblock network",
+            "description": "Unblocks an IP network",
+            "type": "correct",
+            "identifier": "unblock_network",
+            "read_only": false,
+            "parameters": {
+                "destination_network": {
+                    "contains": [
+                        "ip network"
+                    ],
+                    "description": "IP/network to unBlock (X.X.X.X/NM)",
+                    "data_type": "string",
+                    "primary": true,
+                    "read_only": false,
+                    "required": true
+                }
+            },
+            "render": {
+                "width": 12,
+                "title": "unBlock Network",
+                "type": "table",
+                "height": 5
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.destination_network",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric"
+                }
+            ],
+            "versions": "EQ(*)"
+        }
+    ]
 }
